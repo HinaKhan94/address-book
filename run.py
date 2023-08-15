@@ -26,5 +26,16 @@ def main():
                 if term in i:
                     print(i)
 
+
+        elif choice == 3:
+            print('Displaying all the contacts...')
+            for x in range(len(addressList)):
+                print(addressList[x])
+
+
+    else:
+        print('Terminating program...')        
+
+
 if __name__ == '__main__':
     main()
