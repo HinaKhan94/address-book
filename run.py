@@ -1,5 +1,6 @@
 def main():
-
+    # To make sure the application runs even if the txt file is deleted somehow
+    # the except argument will throw an error and start making a new file 
     try:
         #creating an address list
         addressList = []
