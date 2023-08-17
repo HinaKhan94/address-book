@@ -22,16 +22,16 @@ def main():
     choice = 0
     while choice !=4:
         print('** Address Manager **')
-        print('Choose one option from the options below:  ')
+        print('Choose one option from the options below:  ' '\n')
         print('1) Add a contact')
         print('2) Look up a contact')
         print('3) Display all contacts')
-        print('4) Quit')
-        choice = int(input())
+        print('4) Quit', '\n')
+        choice = int(input('What would you like to do?'))
 
         if choice == 1:
             print('Adding a contact...')
-            nPerson = input("Enter the contact's full name:   ")
+            nPerson = input("Enter the contact's full name:   ").lower()
             contact = int(input("Enter the contact number:   "))
             #try:
                 #contact = int(input("Enter the contact number:   "))
