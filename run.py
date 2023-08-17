@@ -32,13 +32,17 @@ def main():
         if choice == 1:
             print('Adding a contact...')
             nPerson = input("Enter the contact's full name:   ")
-            contact = input("Enter the contact number:   ")
+            contact = int(input("Enter the contact number:   "))
+            #try:
+                #contact = int(input("Enter the contact number:   "))
+            #except ValueError:
+                #print("INVALID: you need to enter a number!")
             address = input("Enter the address:   ")
             addressList.append([nPerson, contact, address])
 
         elif choice == 2:
             print('Looking up for a contact...')    
-            term = input('Enter the name:  ')
+            term = input('Enter the name:  ').lower()
             for i in addressList:
                 if term in i:
                     print(i)
@@ -56,7 +60,7 @@ def main():
         # Saving to external file in txt.file
     outfile = open('theaddresslist', 'w') # 'w' for the writing mode in the second argument
     for x in addressList:
-        outfile.write(','.join(x)+ '  ')  
+        outfile.write(','.join(x)+ '\n')  
     outfile.close()    
 
 
