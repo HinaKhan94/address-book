@@ -1,11 +1,28 @@
 def main():
 
-    #creating an address list
-    addressList = []
+    try:
+        #creating an address list
+        addressList = []
+        infile = open('theaddresslist', 'r') # 'r' is for reading the file in the second argument
+        row = infile.readline()
+
+        # starring a loop to append and read rows over and over again
+        while row:
+            addressList.append(row.rstrip("\n").split(','))
+            row = infile.readline()
+        infile.close()
+
+    except FileNotFoundError :
+        print('The address list is unavailable')
+        print('Starting a new list of address!')
+        addressList = []
+
+
 
     choice = 0
     while choice !=4:
         print('** Address Manager **')
+        print('Choose one option from the options below:  ')
         print('1) Add a contact')
         print('2) Look up a contact')
         print('3) Display all contacts')
@@ -34,7 +51,14 @@ def main():
 
 
     else:
-        print('Terminating program...')        
+        print('Terminating program...')   
+
+        # Saving to external file in txt.file
+    outfile = open('theaddresslist', 'w') # 'w' for the writing mode in the second argument
+    for x in addressList:
+        outfile.write(','.join(x)+ '  ')  
+    outfile.close()    
+
 
 
 if __name__ == '__main__':
