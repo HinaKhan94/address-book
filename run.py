@@ -27,7 +27,7 @@ def main():
         print('2) Look up a contact')
         print('3) Display all contacts')
         print('4) Quit', '\n')
-        choice = int(input('What would you like to do?'))
+        choice = int(input('What would you like to do?   '))
 
         if choice == 1:
             print('Adding a contact...')
@@ -58,9 +58,9 @@ def main():
         print('Terminating program...')   
 
         # Saving to external file in txt.file
-    outfile = open('theaddresslist', 'w') # 'w' for the writing mode in the second argument
+    outfile = open('theaddresslist.txt', 'w') # 'w' for the writing mode in the second argument
     for x in addressList:
-        outfile.write(','.join(x)+ '\n')  
+        outfile.write(','.join(x) + '\n')  
     outfile.close()    
 
 
