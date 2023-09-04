@@ -4,6 +4,47 @@ class Color:
     RED = '\033[91m'
     GREEN = '\033[92m'
 
+
+
+# the update_contact function
+def update_contact(addressList):
+    print(Color.GREEN + 'Updating a contact...' + Color.RESET)
+    term = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
+
+    # Check if the input contains a space
+    if ' ' not in term:
+        print(Color.RED + "INVALID: You must enter the full name (with a space between first and last name." + Color.RESET)
+        return
+
+    contact_found = False
+    for contacts in addressList:
+        if term == contacts[0]:
+            print(Color.GREEN + "Contact found:" + Color.RESET)
+            print(f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}")
+            contact_found = True
+
+            # Prompts the user for the updated information
+            new_name = input("Enter the updated full name (press Enter to keep the same): ")
+            new_contact = input("Enter the updated contact number (press Enter to keep the same): ")
+            new_address = input("Enter the updated address (press Enter to keep the same): ")
+
+            # Updates the contact information
+            if new_name:
+                contacts[0] = new_name
+            if new_contact:
+                contacts[1] = new_contact
+            if new_address:
+                contacts[2] = new_address
+
+            print(Color.GREEN + "Contact updated." + Color.RESET)
+            print(Color.GREEN + f"New contact added: Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}" + Color.RESET)
+            break
+
+    if not contact_found:
+        print(Color.RED + "Contact not found." + Color.RESET)
+
+
+
 def main():
     # To make sure the application runs even if the txt file is deleted somehow
     # the except argument will throw an error and start making a new file 
@@ -27,14 +68,14 @@ def main():
 
 
     choice = 0
-    while choice !=4:
+    while choice !=5:
         print('********** My Address Manager ***********')
         print(Color.GREEN + 'Choose one option from the options below:  ' '\n' + Color.RESET)
         print('1) Add a contact')
         print('2) Look up a contact')
-        #print('3) Update or Delete a contact')
-        print('3) Display all contacts')
-        print('4) Quit', '\n')
+        print('3) Update or Delete a contact')
+        print('4) Display all contacts')
+        print('5) Quit', '\n')
         choice = int(input('What would you like to do?   '))
 
         if choice == 1:
@@ -84,6 +125,9 @@ def main():
                     break # exits the loop
 
         elif choice == 3:
+            update_contact(addressList)
+        
+        elif choice == 4:
             print(Color.GREEN + 'Displaying all the contacts...')
             for person in range(len(addressList)):
                 print(addressList[person])
@@ -102,3 +146,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
