@@ -49,6 +49,26 @@ def is_duplicate_phone_number(phone_number, addressList):
             return True
     return False
 
+def delete_contact(addressList):
+    print(Color.GREEN + 'Deleting a contact...' + Color.RESET)
+    contact_to_delete = input('Enter the full name of the contact you want to delete: ').strip().lower()
+
+    contact_deleted = False
+    for people in addressList:
+        if contact_to_delete == people[0]:
+            confirm_delete= input(f"Do you want to delete {people} '\n' Yes/No? '\n'")
+            if confirm_delete.lower() == ("yes"):
+                addressList.remove(people)
+                contact_deleted = True
+                print(Color.GREEN + 'Contact deleted!' + Color.RESET)
+                break #exits the loop after the contact is deleted
+            else: 
+                print(Color.GREEN + 'Contact not deleted!' + Color.RESET)
+                break #exits the loop after processing the contact
+
+    if not contact_deleted:
+        print(Color.RED + 'Contact not found!' + Color.RESET)
+
 
 # main function that runs all the options displayed to the user
 def main():
@@ -74,17 +94,19 @@ def main():
 
 
     choice = 0
-    while choice !=5:
+    while choice !=6:
         print('********** Welcome to Address Manager ***********' '\n' '** Add, Find, Update, Delete and View contacts **' '\n')
         print(Color.GREEN + 'Choose one option from the options below:  ' '\n' + Color.RESET)
         print('1) Add a contact')
         print('2) Look up a contact')
-        print('3) Update or Delete a contact')
-        print('4) Display all contacts')
-        print('5) Quit', '\n')
+        print('3) Update a contact')
+        print('4) Delete a contact')
+        print('5) Display all contacts')
+        print('6) Quit', '\n')
         choice = int(input('What would you like to do?   '))
 
         if choice == 1:
+            #adding a contact
             while True:
                 print(Color.GREEN + 'Adding a contact...' + Color.RESET)
                 full_name = input("Enter the contact's full name with a space between first and last names:   ").lower().strip()
@@ -122,6 +144,7 @@ def main():
 
 
         elif choice == 2:
+            #looking for a contact
                 print(Color.GREEN + 'Looking up for a contact...' + Color.RESET)  
                 while True:  
                     name_of_person = input('Enter the full name (with a space between first and last name):  ').lower()
@@ -145,9 +168,14 @@ def main():
                         break # exits the loop
 
         elif choice == 3:
+            #updating a contact and calling the update function
             update_contact(addressList)
         
         elif choice == 4:
+            #deleting a contact and calling the delete function
+            delete_contact(addressList)
+        
+        elif choice == 5:
             print(Color.GREEN + 'Displaying all the contacts...')
             for person in range(len(addressList)):
                 print(addressList[person])
