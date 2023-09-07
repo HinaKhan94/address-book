@@ -85,8 +85,16 @@ def main():
         choice = int(input('What would you like to do?   '))
 
         if choice == 1:
-            print(Color.GREEN + 'Adding a contact...' + Color.RESET)
-            nPerson = input("Enter the contact's full name:   ").lower()
+            while True:
+                print(Color.GREEN + 'Adding a contact...' + Color.RESET)
+                full_name = input("Enter the contact's full name with a space between first and last names:   ").lower().strip()
+            
+             # Check if the user provided a full name with a space
+                if full_name and ' ' in full_name:
+                    break
+                else:
+                    print(Color.RED + "INVALID: Please enter full name with a space between first and last names." + Color.RESET)
+            
             
             while True:
                 contact_number = input("Enter the contact number (starting with +49):   ")
@@ -103,11 +111,11 @@ def main():
                     else:
                         # If the input passes validation, proceed to add the contact
                         address = input("Enter the address:   ")
-                        addressList.append([nPerson, contact_number, address])
+                        addressList.append([full_name, contact_number, address])
                         print(Color.GREEN + 'Contact added...' + Color.RESET)
                         
                         # displays the newly added contact immediately
-                        print(Color.GREEN + f"New contact added: Name: {nPerson}, Contact: {contact_number}, Address: {address}" + Color.RESET)
+                        print(Color.GREEN + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
                         break
                 else:
                     print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
