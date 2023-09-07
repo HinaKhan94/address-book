@@ -3,29 +3,32 @@ class Color:
     RESET = '\033[0m'
     RED = '\033[91m'
     GREEN = '\033[92m'
+    PURPLE = '\033[95m'
 
 
 def update_contact(addressList):
     # the update_contact function
     print(Color.GREEN + 'Updating a contact...' + Color.RESET)
-    name_of_person = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
+    while True:
+        name_of_person = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
 
-    # Check if the input contains a space
-    if ' ' not in name:
-        print(Color.RED + "INVALID: You must enter the full name (with a space between first and last name." + Color.RESET)
-        return
+        # Check if the input contains a space
+        if ' ' not in name_of_person:
+            print(Color.RED + "INVALID: You must enter the full name (with a space between first and last name." + Color.RESET)
+        else:
+            break
 
     contact_found = False
     for contacts in addressList:
         if name_of_person == contacts[0]:
             print(Color.GREEN + "Contact found:" + Color.RESET)
-            print(f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}")
+            print(Color.PURPLE + f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}" + Color.RESET)
             contact_found = True
 
             # Prompts the user for the updated information
-            new_name = input("Enter the updated full name (press Enter to keep the same): ")
-            new_contact = input("Enter the updated contact number (press Enter to keep the same): ")
-            new_address = input("Enter the updated address (press Enter to keep the same): ")
+            new_name = input("Enter the updated full name (press Enter to keep the same): ").lower().strip()
+            new_contact = (input("Enter the updated contact number (press Enter to keep the same): "))
+            new_address = input("Enter the updated address (press Enter to keep the same): ").lower()
 
             # Updates the contact information
             if new_name:
@@ -137,7 +140,7 @@ def main():
                         print(Color.GREEN + 'Contact added...' + Color.RESET)
                         
                         # displays the newly added contact immediately
-                        print(Color.GREEN + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
+                        print(Color.PURPLE + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
                         break
                 else:
                     print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
