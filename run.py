@@ -8,16 +8,16 @@ class Color:
 def update_contact(addressList):
     # the update_contact function
     print(Color.GREEN + 'Updating a contact...' + Color.RESET)
-    term = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
+    name_of_person = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
 
     # Check if the input contains a space
-    if ' ' not in term:
+    if ' ' not in name:
         print(Color.RED + "INVALID: You must enter the full name (with a space between first and last name." + Color.RESET)
         return
 
     contact_found = False
     for contacts in addressList:
-        if term == contacts[0]:
+        if name_of_person == contacts[0]:
             print(Color.GREEN + "Contact found:" + Color.RESET)
             print(f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}")
             contact_found = True
@@ -122,28 +122,27 @@ def main():
 
 
         elif choice == 2:
-            while True:
-                print(Color.GREEN + 'Looking up for a contact...' + Color.RESET)    
-                term = input('Enter the full name (with a space between first and last name):  ').lower()
-                # checking for the valid format
+                print(Color.GREEN + 'Looking up for a contact...' + Color.RESET)  
+                while True:  
+                    name_of_person = input('Enter the full name (with a space between first and last name):  ').lower()
+                    # checking for the valid format
                
-                if ' ' not in term:
-                    print(Color.RED + "INVALID: please make sure you have enetered the full name and there is space between first and last name" + Color.RESET)
-            
-                else:
-                    contact_found = False 
-                    for contacts in addressList:
-                        if term == contacts[0]:
-                            print(Color.GREEN + "Contact found:" + Color.RESET)
-                            print(f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}")
-                            contact_found = True
-                            break
-                    if not contact_found:
-                        print(Color.RED + "Contact not found!" + Color.RESET)        
+                    if ' ' not in name_of_person:
+                        print(Color.RED + "INVALID: please make sure you have enetered the full name and there is space between first and last name" + Color.RESET)
+                    else:
+                        contact_found = False 
+                        for contacts in addressList:
+                            if name_of_person == contacts[0]:
+                                print(Color.GREEN + "Contact found:" + Color.RESET)
+                                print(f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}")
+                                contact_found = True
+                                break
+                        if not contact_found:
+                            print(Color.RED + "Contact not found!" + Color.RESET)        
                 
-                another_search = input(Color.GREEN + "Do you want to look for another contact? (Yes/No:)" '\n' + Color.RESET)
-                if another_search == 'no':
-                    break # exits the loop
+                    another_search = input(Color.GREEN + "Do you want to look for another contact? (Yes/No:)" '\n' + Color.RESET)
+                    if another_search.lower() == 'no':
+                        break # exits the loop
 
         elif choice == 3:
             update_contact(addressList)
