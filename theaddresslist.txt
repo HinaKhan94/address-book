@@ -1,2 +1,7 @@
 hina khan,12345678912,hiaf
 jimmy,12345678901,lkl
+elaya ismail,9876543212,lappersdorf, germany
+hina khan,12345678901,as
+hina khan,+49123,lapperdorf
+ghalia khan,+499876,pakistan
+ghalia khan,+4915120254473,usa

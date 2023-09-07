@@ -5,9 +5,8 @@ class Color:
     GREEN = '\033[92m'
 
 
-
-# the update_contact function
 def update_contact(addressList):
+    # the update_contact function
     print(Color.GREEN + 'Updating a contact...' + Color.RESET)
     term = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
 
@@ -43,8 +42,15 @@ def update_contact(addressList):
     if not contact_found:
         print(Color.RED + "Contact not found." + Color.RESET)
 
+# Function to check if a phone number is already assigned to another contact and not a duplicate
+def is_duplicate_phone_number(phone_number, addressList):
+    for contact in addressList:
+        if phone_number == contact[1]:
+            return True
+    return False
 
 
+# main function that runs all the options displayed to the user
 def main():
     # To make sure the application runs even if the txt file is deleted somehow
     # the except argument will throw an error and start making a new file 
@@ -69,7 +75,7 @@ def main():
 
     choice = 0
     while choice !=5:
-        print('********** My Address Manager ***********')
+        print('********** Welcome to Address Manager ***********' '\n' '** Add, Find, Update, Delete and View contacts **' '\n')
         print(Color.GREEN + 'Choose one option from the options below:  ' '\n' + Color.RESET)
         print('1) Add a contact')
         print('2) Look up a contact')
@@ -83,22 +89,29 @@ def main():
             nPerson = input("Enter the contact's full name:   ").lower()
             
             while True:
-                contact_input = input("Enter the contact number (11 digits):   ")
+                contact_number = input("Enter the contact number (starting with +49):   ")
                 # Remove any spaces or non-digit characters from the input
-                contact_input = ''.join(filter(str.isdigit, contact_input))
-                try:
-                    contact = int(contact_input)
-                    if len(contact_input) == 11:
-                        break # exists the loop if the value is a valid value
-                    else:
-                        print(Color.RED + "***INVALID: the number must be 11 digits" + Color.RESET) 
-                except ValueError:
-                    print(Color.RED + "***INVALID: you need to enter a number!***" + Color.RESET)
+                contact_number = ''.join(filter(lambda char: char.isdigit() or char == '+', contact_number))
+
+                 # Validate that the phone number starts with '+49' and a length of 11 digits for Germany
+                if contact_number.startswith("+49") and len(contact_number) == 14:
                 
-            address = input("Enter the address:   ")
-            addressList.append([nPerson, contact, address])
-            # displays the newly added contact immediately
-            print(Color.GREEN + f"New contact added: Name: {nPerson}, Contact: {contact}, Address: {address}" + Color.RESET)
+                    # checks if the phone number is a duplicate
+                    if is_duplicate_phone_number(contact_number, addressList):
+                        print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
+                
+                    else:
+                        # If the input passes validation, proceed to add the contact
+                        address = input("Enter the address:   ")
+                        addressList.append([nPerson, contact_number, address])
+                        print(Color.GREEN + 'Contact added...' + Color.RESET)
+                        
+                        # displays the newly added contact immediately
+                        print(Color.GREEN + f"New contact added: Name: {nPerson}, Contact: {contact_number}, Address: {address}" + Color.RESET)
+                        break
+                else:
+                    print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
+
 
         elif choice == 2:
             while True:
