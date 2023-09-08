@@ -43,18 +43,21 @@ def update_contact(addressList):
             new_name = input("Enter the updated full name (press Enter to keep the same): ").lower().strip()
             while True:
                 new_contact = input("Enter the updated contact number (press Enter to keep the same): ")
+                if not new_contact:
+                    new_contact = contacts[1]  # Use the existing contact number if the input is empty
+                #validate the new number provided    
                 new_contact = ''.join(filter(lambda char: char.isdigit() or char == '+', new_contact))
-                if new_contact.startswith("+49") and len(new_contact) == 14:
-                    # checks if the phone number is a duplicate
-                    if is_duplicate_phone_number(new_contact, addressList):
-                        print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
-                    else:
-                        new_address = input("Enter the updated address (press Enter to keep the same): ").lower()   
-                        break 
+                if not new_contact or (new_contact.startswith("+49")) and len(new_contact) == 14:
+                    break #exits the loop if the input is invalid or empty
                 else:
                     print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
-
-
+    
+                # checks if the phone number is a duplicate
+                if is_duplicate_phone_number(new_contact, addressList):
+                    print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
+                    
+            new_address = input("Enter the updated address (press Enter to keep the same): ").lower()   
+            
             # Updates the contact information
             if new_name:
                 contacts[0] = new_name
@@ -98,10 +101,9 @@ def delete_contact(addressList):
         print(Color.RED + 'Contact not found!' + Color.RESET)
 
 def update_google_sheet(sheet,data):
-    worksheet = SHEET.worksheet('alldata') #the first worksheet
-    worksheet.clear() #deletes the existing data in the sheet
-    for row_index, row in enumerate(data, start=1):
-        worksheet.insert_row(row, index=row_index)
+    worksheet = SHEET.worksheet('alldata')
+    # Insert all data from the data list at once
+    worksheet.insert_rows(data, 2)  # Start inserting at the second row
 
 def get_data_from_googlesheet(sheet):
     worksheet = sheet.worksheet('alldata')
@@ -118,9 +120,9 @@ def main():
         #infile = open('theaddresslist.txt', 'r') # 'r' is for reading the file in the second argument
         #row = infile.readline()
 
-        # starring a loop to append and read rows over and over again
+        # starting a loop to append and read rows over and over again
         #while row:
-            #addressList.append(row.rstrip("\n").split(','))
+        #addressList.append(row.rstrip("\n").split(','))
             #row = infile.readline()
         #infile.close()
 
@@ -176,10 +178,14 @@ def main():
                         
                         # displays the newly added contact immediately
                         print(Color.PURPLE + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
-                        update_google_sheet(SHEET, addressList)
+                        update_google_sheet()
                         break
+                    
                 else:
                     print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
+                
+                 # Call update_google_sheet once after collecting all new contacts
+                #update_google_sheet()
 
 
         elif choice == 2:
