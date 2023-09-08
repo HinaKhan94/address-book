@@ -1,3 +1,17 @@
+import gspread
+from google.oauth2.service_account import Credentials
+
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('address_manager')
+
 #ANSI codes for text color
 class Color:
     RESET = '\033[0m'
@@ -56,8 +70,8 @@ def update_contact(addressList):
     if not contact_found:
         print(Color.RED + "Contact not found." + Color.RESET)
 
-# Function to check if a phone number is already assigned to another contact and not a duplicate
 def is_duplicate_phone_number(phone_number, addressList):
+    # Function to check if a phone number is already assigned to another contact and not a duplicate
     for contact in addressList:
         if phone_number == contact[1]:
             return True
@@ -83,22 +97,32 @@ def delete_contact(addressList):
     if not contact_deleted:
         print(Color.RED + 'Contact not found!' + Color.RESET)
 
+def update_google_sheet(sheet,data):
+    worksheet = SHEET.worksheet('alldata') #the first worksheet
+    worksheet.clear() #deletes the existing data in the sheet
+    for row_index, row in enumerate(data, start=1):
+        worksheet.insert_row(row, index=row_index)
+
+def get_data_from_googlesheet(sheet):
+    worksheet = sheet.worksheet('alldata')
+    data = worksheet.get_all_values()
+    return data
 
 # main function that runs all the options displayed to the user
 def main():
-    # To make sure the application runs even if the txt file is deleted somehow
+    # To make sure the application runs even if the file is deleted somehow
     # the except argument will throw an error and start making a new file 
     try:
         #creating an address list
-        addressList = []
-        infile = open('theaddresslist.txt', 'r') # 'r' is for reading the file in the second argument
-        row = infile.readline()
+        addressList = get_data_from_googlesheet(SHEET)
+        #infile = open('theaddresslist.txt', 'r') # 'r' is for reading the file in the second argument
+        #row = infile.readline()
 
         # starring a loop to append and read rows over and over again
-        while row:
-            addressList.append(row.rstrip("\n").split(','))
-            row = infile.readline()
-        infile.close()
+        #while row:
+            #addressList.append(row.rstrip("\n").split(','))
+            #row = infile.readline()
+        #infile.close()
 
     except FileNotFoundError :
         print('The address list is unavailable')
@@ -133,7 +157,7 @@ def main():
             
             
             while True:
-                contact_number = input("Enter the contact number (starting with +49):   ")
+                contact_number = input("Enter the contact number (starting with +49 and have 11 digits)\n Example:+4912345678912:   ")
                 # Remove any spaces or non-digit characters from the input
                 contact_number = ''.join(filter(lambda char: char.isdigit() or char == '+', contact_number))
 
@@ -152,6 +176,7 @@ def main():
                         
                         # displays the newly added contact immediately
                         print(Color.PURPLE + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
+                        update_google_sheet(SHEET, addressList)
                         break
                 else:
                     print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
@@ -184,26 +209,28 @@ def main():
         elif choice == 3:
             #updating a contact and calling the update function
             update_contact(addressList)
+            update_google_sheet(SHEET, addressList)
         
         elif choice == 4:
             #deleting a contact and calling the delete function
             delete_contact(addressList)
+            update_google_sheet(SHEET, addressList)
         
         elif choice == 5:
             print(Color.GREEN + 'Displaying all the contacts...')
-            for person in range(len(addressList)):
-                print(addressList[person])
+            all_contacts = get_data_from_googlesheet(SHEET)
+            for contact in all_contacts:
+                print(f"Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}")
 
 
     else:
         print(Color.GREEN + 'Terminating program...' + Color.RESET)   
 
         # Saving to external file in txt.file
-    outfile = open('theaddresslist.txt', 'w') # 'w' for the writing mode in the second argument
-    for x in addressList:
-        outfile.write(','.join(str(item) for item in x) + '\n')  
-    outfile.close()    
-
+    #outfile = open('theaddresslist.txt', 'w') # 'w' for the writing mode in the second argument
+    #for x in addressList:
+        #outfile.write(','.join(str(item) for item in x) + '\n')  
+    #outfile.close()    
 
 
 if __name__ == '__main__':
