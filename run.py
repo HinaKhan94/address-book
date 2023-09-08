@@ -27,8 +27,19 @@ def update_contact(addressList):
 
             # Prompts the user for the updated information
             new_name = input("Enter the updated full name (press Enter to keep the same): ").lower().strip()
-            new_contact = (input("Enter the updated contact number (press Enter to keep the same): "))
-            new_address = input("Enter the updated address (press Enter to keep the same): ").lower()
+            while True:
+                new_contact = input("Enter the updated contact number (press Enter to keep the same): ")
+                new_contact = ''.join(filter(lambda char: char.isdigit() or char == '+', new_contact))
+                if new_contact.startswith("+49") and len(new_contact) == 14:
+                    # checks if the phone number is a duplicate
+                    if is_duplicate_phone_number(new_contact, addressList):
+                        print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
+                    else:
+                        new_address = input("Enter the updated address (press Enter to keep the same): ").lower()   
+                        break 
+                else:
+                    print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
+
 
             # Updates the contact information
             if new_name:
