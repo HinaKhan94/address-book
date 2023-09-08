@@ -146,7 +146,7 @@ def main():
                 
                     else:
                         # If the input passes validation, proceed to add the contact
-                        address = input("Enter the address:   ")
+                        address = input("Enter the address:   ").lower()
                         addressList.append([full_name, contact_number, address])
                         print(Color.GREEN + 'Contact added...' + Color.RESET)
                         
