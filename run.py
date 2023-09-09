@@ -87,7 +87,7 @@ def delete_contact(addressList):
     contact_deleted = False
     for people in addressList:
         if contact_to_delete == people[0]:
-            confirm_delete= input(f"Do you want to delete {people} '\n' Yes/No? '\n'")
+            confirm_delete= input(f"Do you want to delete {people}\nYes/No? \n")
             if confirm_delete.lower() == ("yes"):
                 addressList.remove(people)
                 contact_deleted = True
@@ -97,13 +97,14 @@ def delete_contact(addressList):
                 print(Color.GREEN + 'Contact not deleted!' + Color.RESET)
                 break #exits the loop after processing the contact
 
-    if not contact_deleted:
+    if not contact_deleted and confirm_delete.lower() == ("yes"): 
         print(Color.RED + 'Contact not found!' + Color.RESET)
 
 def update_google_sheet(sheet,data):
     worksheet = SHEET.worksheet('alldata')
+    worksheet.clear()
     # Insert all data from the data list at once
-    worksheet.insert_rows(data, 2)  # Start inserting at the second row
+    worksheet.insert_rows(data)  # Start inserting at the second row
 
 def get_data_from_googlesheet(sheet):
     worksheet = sheet.worksheet('alldata')
@@ -178,7 +179,7 @@ def main():
                         
                         # displays the newly added contact immediately
                         print(Color.PURPLE + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
-                        update_google_sheet()
+                        update_google_sheet(SHEET, addressList)
                         break
                     
                 else:
@@ -225,9 +226,12 @@ def main():
         elif choice == 5:
             print(Color.GREEN + 'Displaying all the contacts...')
             all_contacts = get_data_from_googlesheet(SHEET)
+            number = 0
             for contact in all_contacts:
-                print(f"Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}")
-
+                if contact[1].strip() and contact[1] != 'contact_number':
+                    number +=1
+                    print(f"{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}")
+                
 
     else:
         print(Color.GREEN + 'Terminating program...' + Color.RESET)   
