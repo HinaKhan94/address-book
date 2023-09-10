@@ -20,31 +20,55 @@ class Color:
     PURPLE = '\033[95m'
 
 
-def update_contact(addressList):
+def update_contact(address_list):
     # the update_contact function
     print(Color.GREEN + 'Updating a contact...' + Color.RESET)
     while True:
-        name_of_person = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
+        search_name = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
+        matching_contacts = find_duplicate_contacts(search_name, address_list)
+
+        if not matching_contacts:
+            print(Color.RED + "Contact not Found!" + Color.RESET)
+        else:
+            print(Color.GREEN + "Contacts found:" + Color.RESET)
+            for i, contact in matching_contacts:
+                print(f"{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}")
+            
+            user_choice = input('Select which contact you would like to update or "q" to quit!')
+            if user_choice.lower() == 'q':
+                break
+          
+            try:
+                user_choice_index = int(user_choice) - 1 #
+                if user_choice_index >= 0 and user_choice_index < len(matching_contacts):
+                    
+                    contact_index, selected_contact = matching_contacts[user_choice_index]
+                    print('you selected',matching_contacts[user_choice_index])
+            except ValueError:
+                print(Color.RED + "Invalid input. Please enter a valid number or 'q' to quit." + Color.RESET)
 
         # Check if the input contains a space
-        if ' ' not in name_of_person:
-            print(Color.RED + "INVALID: You must enter the full name (with a space between first and last name." + Color.RESET)
-        else:
-            break
+        #if ' ' not in full_name:
+            #print(Color.RED + "INVALID: You must enter the full name (with a space between first and last name." + Color.RESET)
+        #else:
+            #break
 
-    contact_found = False
-    for contacts in addressList:
-        if name_of_person == contacts[0]:
-            print(Color.GREEN + "Contact found:" + Color.RESET)
-            print(Color.PURPLE + f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}" + Color.RESET)
-            contact_found = True
+    #contact_found = False
+    #for contacts in address_list:
+       # names = contacts[0].split()
+        #if full_name == names[0] or full_name == names[0] or full_name == contacts[0]:
+            #print(contacts[1])
+            #print(Color.GREEN + "Contact found:" + Color.RESET)
+            #print(Color.PURPLE + f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}" + Color.RESET)
+            #contact_found = True
 
             # Prompts the user for the updated information
+           
             new_name = input("Enter the updated full name (press Enter to keep the same): ").lower().strip()
             while True:
                 new_contact = input("Enter the updated contact number (press Enter to keep the same): ")
                 if not new_contact:
-                    new_contact = contacts[1]  # Use the existing contact number if the input is empty
+                    new_contact = contact[1]  # Use the existing contact number if the input is empty
                 #validate the new number provided    
                 new_contact = ''.join(filter(lambda char: char.isdigit() or char == '+', new_contact))
                 if not new_contact or (new_contact.startswith("+49")) and len(new_contact) == 14:
@@ -53,43 +77,67 @@ def update_contact(addressList):
                     print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
     
                 # checks if the phone number is a duplicate
-                if is_duplicate_phone_number(new_contact, addressList):
+                if is_duplicate_phone_number(new_contact, address_list):
                     print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
                     
             new_address = input("Enter the updated address (press Enter to keep the same): ").lower()   
             
             # Updates the contact information
+            
             if new_name:
-                contacts[0] = new_name
+                contact[0] = new_name
             if new_contact:
-                contacts[1] = new_contact
+                contact[1] = new_contact
             if new_address:
-                contacts[2] = new_address
+                contact[2] = new_address
 
             print(Color.GREEN + "Contact updated." + Color.RESET)
-            print(Color.GREEN + f"New contact added: Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}" + Color.RESET)
+            print(Color.GREEN + f"New contact added: Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}" + Color.RESET)
             break
 
-    if not contact_found:
-        print(Color.RED + "Contact not found." + Color.RESET)
+            #else: 
+               # print(Color.RED + "Invalid choice. Please enter a valid number." + Color.RESET)
+        #except ValueError:
+          # print(Color.RED + "Invalid input. Please enter a valid number or 'q' to quit." + Color.RESET)
 
-def is_duplicate_phone_number(phone_number, addressList):
+    #if not contact_found:
+        #print(Color.RED + "Contact not found." + Color.RESET)
+
+def find_duplicate_contacts(full_name, address_list):
+    '''
+    When the find_duplicate_contacts function is called, it iterates through the address_list, which is a list of contacts.
+    For each contact in the list, it checks if the full_name (the name the user entered) is found within the contact's full name (which may include both first and last names).
+    If a match is found, the function creates a tuple containing two values: index number at which the ocntact is located and the contact info itself
+
+    '''
+    matching_contacts = []
+    number = 0
+    for index, contact in enumerate(address_list):
+        names = contact[0].split() #splitting the full name of a contact (which is stored in contact[0]) into a list of individual words
+        if any(full_name in names for name in names):
+            print(number, contact)
+            matching_contacts.append((number,contact))
+            number += 1
+    
+    return matching_contacts
+
+def is_duplicate_phone_number(phone_number, address_list):
     # Function to check if a phone number is already assigned to another contact and not a duplicate
-    for contact in addressList:
+    for contact in address_list:
         if phone_number == contact[1]:
             return True
     return False
 
-def delete_contact(addressList):
+def delete_contact(address_list):
     print(Color.GREEN + 'Deleting a contact...' + Color.RESET)
     contact_to_delete = input('Enter the full name of the contact you want to delete: ').strip().lower()
 
     contact_deleted = False
-    for people in addressList:
+    for people in address_list:
         if contact_to_delete == people[0]:
             confirm_delete= input(f"Do you want to delete {people}\nYes/No? \n")
             if confirm_delete.lower() == ("yes"):
-                addressList.remove(people)
+                address_list.remove(people)
                 contact_deleted = True
                 print(Color.GREEN + 'Contact deleted!' + Color.RESET)
                 break #exits the loop after the contact is deleted
@@ -117,20 +165,20 @@ def main():
     # the except argument will throw an error and start making a new file 
     try:
         #creating an address list
-        addressList = get_data_from_googlesheet(SHEET)
-        #infile = open('theaddresslist.txt', 'r') # 'r' is for reading the file in the second argument
+        address_list = get_data_from_googlesheet(SHEET)
+        #infile = open('theaddress_list.txt', 'r') # 'r' is for reading the file in the second argument
         #row = infile.readline()
 
         # starting a loop to append and read rows over and over again
         #while row:
-        #addressList.append(row.rstrip("\n").split(','))
+        #address_list.append(row.rstrip("\n").split(','))
             #row = infile.readline()
         #infile.close()
 
     except FileNotFoundError :
         print('The address list is unavailable')
         print('Starting a new list of address!')
-        addressList = []
+        address_list = []
 
 
 
@@ -168,18 +216,18 @@ def main():
                 if contact_number.startswith("+49") and len(contact_number) == 14:
                 
                     # checks if the phone number is a duplicate
-                    if is_duplicate_phone_number(contact_number, addressList):
+                    if is_duplicate_phone_number(contact_number, address_list):
                         print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
                 
                     else:
                         # If the input passes validation, proceed to add the contact
                         address = input("Enter the address:   ").lower()
-                        addressList.append([full_name, contact_number, address])
+                        address_list.append([full_name, contact_number, address])
                         print(Color.GREEN + 'Contact added...' + Color.RESET)
                         
                         # displays the newly added contact immediately
                         print(Color.PURPLE + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
-                        update_google_sheet(SHEET, addressList)
+                        update_google_sheet(SHEET, address_list)
                         break
                     
                 else:
@@ -193,15 +241,15 @@ def main():
             #looking for a contact
                 print(Color.GREEN + 'Looking up for a contact...' + Color.RESET)  
                 while True:  
-                    name_of_person = input('Enter the full name (with a space between first and last name):  ').lower()
+                    full_name = input('Enter the full name (with a space between first and last name):  ').lower()
                     # checking for the valid format
                
-                    if ' ' not in name_of_person:
+                    if ' ' not in full_name:
                         print(Color.RED + "INVALID: please make sure you have enetered the full name and there is space between first and last name" + Color.RESET)
                     else:
                         contact_found = False 
-                        for contacts in addressList:
-                            if name_of_person == contacts[0]:
+                        for contacts in address_list:
+                            if full_name == contacts[0]:
                                 print(Color.GREEN + "Contact found:" + Color.RESET)
                                 print(f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}")
                                 contact_found = True
@@ -215,13 +263,13 @@ def main():
 
         elif choice == 3:
             #updating a contact and calling the update function
-            update_contact(addressList)
-            update_google_sheet(SHEET, addressList)
+            update_contact(address_list)
+            update_google_sheet(SHEET, address_list)
         
         elif choice == 4:
             #deleting a contact and calling the delete function
-            delete_contact(addressList)
-            update_google_sheet(SHEET, addressList)
+            delete_contact(address_list)
+            update_google_sheet(SHEET, address_list)
         
         elif choice == 5:
             print(Color.GREEN + 'Displaying all the contacts...')
@@ -237,8 +285,8 @@ def main():
         print(Color.GREEN + 'Terminating program...' + Color.RESET)   
 
         # Saving to external file in txt.file
-    #outfile = open('theaddresslist.txt', 'w') # 'w' for the writing mode in the second argument
-    #for x in addressList:
+    #outfile = open('theaddress_list.txt', 'w') # 'w' for the writing mode in the second argument
+    #for x in address_list:
         #outfile.write(','.join(str(item) for item in x) + '\n')  
     #outfile.close()    
 
