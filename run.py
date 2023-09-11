@@ -150,6 +150,7 @@ def delete_contact(address_list):
 def update_google_sheet(sheet,data):
     # it updates data whenever a user adds, updates and deletes a contact
     worksheet = SHEET.worksheet('alldata')
+    worksheet.clear()
     worksheet.insert_rows(data)  
 
 def get_data_from_googlesheet(sheet):
