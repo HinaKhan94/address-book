@@ -12,8 +12,9 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('address_manager')
 
-#ANSI codes for text color
+
 class Color:
+    #ANSI codes for text color
     RESET = '\033[0m'
     RED = '\033[91m'
     GREEN = '\033[92m'
@@ -21,7 +22,14 @@ class Color:
 
 
 def update_contact(address_list):
-    # the update_contact function
+    '''
+    The user is asked for entering first, last or full-name of the contact they want to update
+    the program shows a list of matching contacts from which the user can select the one they want to update
+    the selected option is then displayed with questions to update the currect information
+    the contact_number has certain data validation and will throw an error if user types incorrectly
+
+    '''
+   
     print(Color.GREEN + 'Updating a contact...' + Color.RESET)
     while True:
         search_name = input('Enter the full name of the contact (with a space between first and last name) you want to update: ').lower()
@@ -32,7 +40,7 @@ def update_contact(address_list):
         else:
             print(Color.GREEN + "Contacts found:" + Color.RESET)
             for i, contact in matching_contacts:
-                print(f"{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}")
+                print(Color.PURPLE + f"{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}")
             
             user_choice = input('Select which contact you would like to update or "q" to quit!')
             if user_choice.lower() == 'q':
@@ -46,21 +54,6 @@ def update_contact(address_list):
                     print('you selected',matching_contacts[user_choice_index])
             except ValueError:
                 print(Color.RED + "Invalid input. Please enter a valid number or 'q' to quit." + Color.RESET)
-
-        # Check if the input contains a space
-        #if ' ' not in full_name:
-            #print(Color.RED + "INVALID: You must enter the full name (with a space between first and last name." + Color.RESET)
-        #else:
-            #break
-
-    #contact_found = False
-    #for contacts in address_list:
-       # names = contacts[0].split()
-        #if full_name == names[0] or full_name == names[0] or full_name == contacts[0]:
-            #print(contacts[1])
-            #print(Color.GREEN + "Contact found:" + Color.RESET)
-            #print(Color.PURPLE + f"Name: {contacts[0]}, Contact: {contacts[1]}, Address: {contacts[2]}" + Color.RESET)
-            #contact_found = True
 
             # Prompts the user for the updated information
            
@@ -85,23 +78,17 @@ def update_contact(address_list):
             # Updates the contact information
             
             if new_name:
-                contact[0] = new_name
+                selected_contact[0] = new_name
             if new_contact:
-                contact[1] = new_contact
+                selected_contact[1] = new_contact
             if new_address:
-                contact[2] = new_address
+                selected_contact[2] = new_address
+
+            address_list[contact_index] = selected_contact
 
             print(Color.GREEN + "Contact updated." + Color.RESET)
-            print(Color.GREEN + f"New contact added: Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}" + Color.RESET)
+            print(Color.GREEN + f"New contact added: Name: {selected_contact[0]}, Contact: {selected_contact[1]}, Address: {selected_contact[2]}" + Color.RESET)
             break
-
-            #else: 
-               # print(Color.RED + "Invalid choice. Please enter a valid number." + Color.RESET)
-        #except ValueError:
-          # print(Color.RED + "Invalid input. Please enter a valid number or 'q' to quit." + Color.RESET)
-
-    #if not contact_found:
-        #print(Color.RED + "Contact not found." + Color.RESET)
 
 def find_duplicate_contacts(full_name, address_list):
     '''
@@ -122,13 +109,25 @@ def find_duplicate_contacts(full_name, address_list):
     return matching_contacts
 
 def is_duplicate_phone_number(phone_number, address_list):
-    # Function to check if a phone number is already assigned to another contact and not a duplicate
+    '''
+    Function to check if a phone number is already assigned to another contact 
+    and not a duplicate. If it is, it will throw an error to the user 
+    '''
+    
     for contact in address_list:
         if phone_number == contact[1]:
             return True
     return False
 
 def delete_contact(address_list):
+    '''
+    the delete function allows the user to find the contact by typing in the first, last or the full name 
+    of the contact it wants to delete. Once the contact is selected, it will ask her to confirm the deletion
+    when pressed Yes in the confirmation message, the contact gets deleted and is also updated in the address_list
+    when pressed No in the confirmation message, the user is taken back to the main menu 
+
+    '''
+
     print(Color.GREEN + 'Deleting a contact...' + Color.RESET)
     contact_to_delete = input('Enter the full name of the contact you want to delete: ').strip().lower()
 
@@ -149,31 +148,36 @@ def delete_contact(address_list):
         print(Color.RED + 'Contact not found!' + Color.RESET)
 
 def update_google_sheet(sheet,data):
+    # it updates data whenever a user adds, updates and deletes a contact
     worksheet = SHEET.worksheet('alldata')
-    worksheet.clear()
-    # Insert all data from the data list at once
-    worksheet.insert_rows(data)  # Start inserting at the second row
+    worksheet.insert_rows(data)  
 
 def get_data_from_googlesheet(sheet):
+    '''
+    this function gets the data from the sheet named 'alldata' in the google sheets
+    and displays the data in the main program function at the start so that user can views
+    all contacts present in the list
+
+    '''
+
     worksheet = sheet.worksheet('alldata')
     data = worksheet.get_all_values()
     return data
 
-# main function that runs all the options displayed to the user
-def main():
-    # To make sure the application runs even if the file is deleted somehow
-    # the except argument will throw an error and start making a new file 
-    try:
-        #creating an address list
-        address_list = get_data_from_googlesheet(SHEET)
-        #infile = open('theaddress_list.txt', 'r') # 'r' is for reading the file in the second argument
-        #row = infile.readline()
 
-        # starting a loop to append and read rows over and over again
-        #while row:
-        #address_list.append(row.rstrip("\n").split(','))
-            #row = infile.readline()
-        #infile.close()
+def main():
+    '''
+    To make sure the application runs even if the file is deleted somehow
+    the except argument will throw an error and terminates the program
+    The user is displayed with 6 options to choose from as the main menu of the program
+    It also contains some data validations and if user's input does not meet the validation, it will throw validation errors
+
+    '''
+   
+    try:
+        #taking existing data from the sheet
+        address_list = get_data_from_googlesheet(SHEET)
+        
 
     except FileNotFoundError :
         print('The address list is unavailable')
@@ -227,14 +231,14 @@ def main():
                         
                         # displays the newly added contact immediately
                         print(Color.PURPLE + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
-                        update_google_sheet(SHEET, address_list)
+                        update_google_sheet(SHEET, address_list) # Call update_google_sheet after collecting all new contacts
                         break
                     
                 else:
                     print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
                 
-                 # Call update_google_sheet once after collecting all new contacts
-                #update_google_sheet()
+            
+                
 
 
         elif choice == 2:
@@ -284,12 +288,8 @@ def main():
     else:
         print(Color.GREEN + 'Terminating program...' + Color.RESET)   
 
-        # Saving to external file in txt.file
-    #outfile = open('theaddress_list.txt', 'w') # 'w' for the writing mode in the second argument
-    #for x in address_list:
-        #outfile.write(','.join(str(item) for item in x) + '\n')  
-    #outfile.close()    
-
+      
+    
 
 if __name__ == '__main__':
     main()
