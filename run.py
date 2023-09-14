@@ -30,19 +30,19 @@ def update_contact(address_list):
 
     '''
    
-    print(Color.GREEN + 'Updating a contact...' + Color.RESET)
+    print(Color.GREEN + '\nUpdating a contact...\n' + Color.RESET)
     while True:
-        search_name = input('Enter the name you want to update: ').lower()
+        search_name = input('\nEnter the name you want to update:\n').lower()
         matching_contacts = find_duplicate_contacts(search_name, address_list)
 
         if not matching_contacts:
-            print(Color.RED + "Contact not Found!" + Color.RESET)
+            print(Color.RED + "\nContact not Found!\n" + Color.RESET)
         else:
-            print(Color.GREEN + "Contacts found:" + Color.RESET)
+            print(Color.GREEN + "\nContacts found:\n" + Color.RESET)
             for i, contact in matching_contacts:
-                print(Color.PURPLE + f"{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}")
+                print(Color.PURPLE + f"\n{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
             
-            user_choice = input('Select which contact you would like to update or "q" to quit!')
+            user_choice = input('\nSelect which contact you would like to update or "q" to quit!\n')
             if user_choice.lower() == 'q':
                 break
           
@@ -51,15 +51,15 @@ def update_contact(address_list):
                 if user_choice_index >= 0 and user_choice_index < len(matching_contacts):
                     
                     contact_index, selected_contact = matching_contacts[user_choice_index]
-                    print('you selected',matching_contacts[user_choice_index])
+                    print(f"\nyou selected {matching_contacts[user_choice_index]}\n")
             except ValueError:
-                print(Color.RED + "Invalid input. Please enter a valid number or 'q' to quit." + Color.RESET)
+                print(Color.RED + "\nInvalid input. Please enter a valid number or 'q' to quit.\n" + Color.RESET)
 
             # Prompts the user for the updated information
            
-            new_name = input("Enter the updated full name (press Enter to keep the same): ").lower().strip()
+            new_name = input("\nEnter the updated full name (press Enter to keep the same):\n ").lower().strip()
             while True:
-                new_contact = input("Enter the updated contact number (press Enter to keep the same): ")
+                new_contact = input("\nEnter the updated contact number (press Enter to keep the same):\n ")
                 if not new_contact:
                     new_contact = contact[1]  # Use the existing contact number if the input is empty
                 #validate the new number provided    
@@ -71,9 +71,9 @@ def update_contact(address_list):
     
                 # checks if the phone number is a duplicate
                 if is_duplicate_phone_number(new_contact, address_list):
-                    print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
+                    print(Color.RED + '\nINVALID: this number is already assigned to another contact\n' + Color.RESET)
                     
-            new_address = input("Enter the updated address (press Enter to keep the same): ").lower()   
+            new_address = input("\nEnter the updated address (press Enter to keep the same): \n").lower()   
             
             # Updates the contact information
             
@@ -86,8 +86,8 @@ def update_contact(address_list):
 
             address_list[contact_index] = selected_contact
 
-            print(Color.GREEN + "Contact updated." + Color.RESET)
-            print(Color.GREEN + f"Contact Updated: Name: {selected_contact[0]}, Contact: {selected_contact[1]}, Address: {selected_contact[2]}" + Color.RESET)
+            print(Color.GREEN + "\nContact updated.\n" + Color.RESET)
+            print(Color.GREEN + f"\nContact Updated: Name: {selected_contact[0]}, Contact: {selected_contact[1]}, Address: {selected_contact[2]}\n" + Color.RESET)
             break
 
 def find_duplicate_contacts(full_name, address_list):
@@ -127,20 +127,20 @@ def delete_contact(address_list):
 
     '''
     while True:
-        print(Color.GREEN + 'Deleting a contact...' + Color.RESET)
-        contact_to_delete = input('Enter the name of the contact you want to delete: ').lower()
+        print(Color.GREEN + '\nDeleting a contact...\n' + Color.RESET)
+        contact_to_delete = input('\nEnter the name of the contact you want to delete:\n ').lower()
         matching_contacts = find_duplicate_contacts(contact_to_delete, address_list)
 
         confirm_delete = "" 
 
         if not matching_contacts:
-            print(Color.RED + "Contact not Found!" + Color.RESET)
+            print(Color.RED + "\nContact not Found!\n" + Color.RESET)
         else:
-            print(Color.GREEN + "Contacts found:" + Color.RESET)
+            print(Color.GREEN + "\nContacts found:\n" + Color.RESET)
             for i, contact in matching_contacts:
-                print(Color.PURPLE + f"{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}")
+                print(Color.PURPLE + f"\n{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
         
-            user_choice = input('Select which contact you would like to delete or "q" to quit!')
+            user_choice = input('\nSelect which contact you would like to delete or "q" to quit!\n')
             if user_choice.lower() == 'q':
                 break
           
@@ -148,21 +148,21 @@ def delete_contact(address_list):
                 user_choice_index = int(user_choice) - 1 #
                 if user_choice_index >= 0 and user_choice_index < len(matching_contacts):   
                     contact_index, selected_contact = matching_contacts[user_choice_index]
-                    print('you selected',matching_contacts[user_choice_index])
-                    confirm_delete = input(f"Do you want to delete {selected_contact}\nYes/No?\n")
+                    print(f"\nYou selected {matching_contacts[user_choice_index]}\n")
+                    confirm_delete = input(f"\nDo you want to delete {selected_contact}\nYes/No?\n")
                     if confirm_delete.lower() == ("yes"):
                         address_list.remove(selected_contact)
                         contact_deleted = True
-                        print(Color.GREEN + 'Contact deleted!' + Color.RESET)
+                        print(Color.GREEN + '\nContact deleted!\n' + Color.RESET)
                         break #exits the loop after the contact is deleted
                     else: 
-                        print(Color.GREEN + 'Contact not deleted!' + Color.RESET)
+                        print(Color.GREEN + '\nContact not deleted!\n' + Color.RESET)
                         break #exits the loop after processing the contact
             except ValueError:
-                print(Color.RED + "Invalid input. Please enter a valid number or 'q' to quit." + Color.RESET)
+                print(Color.RED + "\nInvalid input. Please enter a valid number or 'q' to quit.\n" + Color.RESET)
         
         if not contact_deleted and confirm_delete.lower() == ("yes"): 
-            print(Color.RED + 'Contact not found!' + Color.RESET)
+            print(Color.RED + '\nContact not found!\n' + Color.RESET)
 
 def update_google_sheet(sheet,data):
     # it updates data whenever a user adds, updates and deletes a contact
@@ -214,13 +214,13 @@ def main():
         print('4) Delete a contact')
         print('5) Display all contacts')
         print('6) Quit', '\n')
-        choice = int(input('What would you like to do?   '))
+        choice = int(input('What would you like to do?  \n'))
 
         if choice == 1:
             #adding a contact
             while True:
-                print(Color.GREEN + 'Adding a contact...' + Color.RESET)
-                full_name = input("Enter the contact's full name with a space between first and last names:   ").lower().strip()
+                print(Color.GREEN + 'Adding a contact...\n' + Color.RESET)
+                full_name = input("\nEnter the contact's full name with a space between first and last names:\n").lower().strip()
             
              # Check if the user provided a full name with a space
                 if full_name and ' ' in full_name:
@@ -230,7 +230,7 @@ def main():
             
             
             while True:
-                contact_number = input("Enter the contact number (starting with +49 and have 11 digits)\n Example:+4912345678912:   ")
+                contact_number = input("\nEnter the contact number (starting with +49 and have 11 digits),Example(+4912345678912):\n")
                 # Remove any spaces or non-digit characters from the input
                 contact_number = ''.join(filter(lambda char: char.isdigit() or char == '+', contact_number))
 
@@ -239,21 +239,21 @@ def main():
                 
                     # checks if the phone number is a duplicate
                     if is_duplicate_phone_number(contact_number, address_list):
-                        print(Color.RED + 'INVALID: this number is already assigned to another contact' + Color.RESET)
+                        print(Color.RED + '\nINVALID: this number is already assigned to another contact\n' + Color.RESET)
                 
                     else:
                         # If the input passes validation, proceed to add the contact
-                        address = input("Enter the address:   ").lower()
+                        address = input("\nEnter the address:   \n").lower()
                         address_list.append([full_name, contact_number, address])
-                        print(Color.GREEN + 'Contact added...' + Color.RESET)
+                        print(Color.GREEN + '\nContact added...\n' + Color.RESET)
                         
                         # displays the newly added contact immediately
-                        print(Color.PURPLE + f"New contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}" + Color.RESET)
+                        print(Color.PURPLE + f"\nNew contact added: Name: {full_name}, Contact: {contact_number}, Address: {address}\n" + Color.RESET)
                         update_google_sheet(SHEET, address_list) # Call update_google_sheet after collecting all new contacts
                         break
                     
                 else:
-                    print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
+                    print(Color.RED + "\nINVALID: The phone number must start with +49 and must have 11 digits\n" + Color.RESET)
                 
             
                 
@@ -261,20 +261,20 @@ def main():
 
         elif choice == 2:
             #looking for a contact
-                print(Color.GREEN + 'Looking up for a contact...' + Color.RESET)  
+                print(Color.GREEN + '\nLooking up for a contact...\n' + Color.RESET)  
                 while True:  
-                    full_name = input('Enter the name of the person:  ').lower()
+                    full_name = input('\nEnter the name of the person:  \n').lower()
                     matching_contacts = find_duplicate_contacts(full_name, address_list)
 
                     if not matching_contacts:
-                        print(Color.RED + "Contact not Found!" + Color.RESET)
+                        print(Color.RED + "\nContact not Found!\n" + Color.RESET)
                     else:
-                        print(Color.GREEN + "Contacts found:" + Color.RESET)
+                        print(Color.GREEN + "\nContacts found:\n" + Color.RESET)
                         for i, contact in matching_contacts:
-                            print(Color.PURPLE + f"{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}")
+                            print(Color.PURPLE + f"\n{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
                             
 
-                    another_search = input(Color.GREEN + "Do you want to look for another contact? (Yes/No:)" '\n' + Color.RESET)
+                    another_search = input(Color.GREEN + "\nDo you want to look for another contact? (Yes/No:)\n"  + Color.RESET)
                     if another_search.lower() == 'no':
                         break # exits the loop
                             
@@ -290,17 +290,17 @@ def main():
             update_google_sheet(SHEET, address_list)
         
         elif choice == 5:
-            print(Color.GREEN + 'Displaying all the contacts...')
+            print(Color.GREEN + '\nDisplaying all the contacts...\n')
             all_contacts = get_data_from_googlesheet(SHEET)
             number = 0
             for contact in all_contacts:
                 if contact[1].strip() and contact[1] != 'Contact_number':
                     number +=1
-                    print(f"{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}")
+                    print(f"\n{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}\n")
                 
 
     else:
-        print(Color.GREEN + 'Terminating program...' + Color.RESET)   
+        print(Color.GREEN + 'Terminating program...\n' + Color.RESET)   
 
       
     
