@@ -38,7 +38,8 @@
 
 ### Purpose and Target Audience
    * Address_Manager is a simple contacts storing system, safely backed up and updated to a google worksheet.
-   * The app is made for everyone to add, find, update and view contacts information, including name, contact number and address.
+   * The app is made for everyone in Germany to add, find, update and view contacts information, including name, contact number and address.
+   * For the contact number in adding a contact function, the country code (+49) used is for Germany only.
 
 ### User Story
    * The user is presented with an attractive intuitive command-line admin portal, navigating through various menu choices.

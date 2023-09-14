@@ -318,13 +318,13 @@ def main():
             update_google_sheet(SHEET, address_list)
         
         elif choice == 5:
-            print(Color.GREEN + '\nDisplaying all the contacts...\n')
+            print(Color.GREEN + '\nDisplaying all the contacts...\n' + Color.RESET)
             all_contacts = get_data_from_googlesheet(SHEET)
             number = 0
             for contact in all_contacts:
                 if contact[1].strip() and contact[1] != 'Contact_number':
                     number +=1
-                    print(f"\n{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}\n")
+                    print(Color.GREEN + f"\n{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}\n" + Color.RESET)
                 
 
     else:
