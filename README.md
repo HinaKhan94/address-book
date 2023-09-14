@@ -11,7 +11,7 @@
     *  [Goals](#goals)
 
 * [Design](#design)
-  * [Logic flow](#wireframes)
+  * [Logic flow](#logic-flow-chart)
   * [Color Scheme](#color-scheme)
   * [Typography](#typography)
   * [Imagery](#imagery)
@@ -133,8 +133,8 @@ Display Contacts Flow and Logic
    * It also checks for any invalid errors and handles them according for the program to keep running wihtout causing any problem to the user.
 
 ### Planned features
-   * The initial plan waas to have a simple address manager with options to add, find and display contacts.
-   * 
+   * The initial plan waas to have a simple address manager with options to add, find, update, delete and display contacts.
+   * The added information is then stored in google sheet via an API call.
 
 
 ## Validation
@@ -162,6 +162,7 @@ Display Contacts Flow and Logic
 * The following libraries were imported to run the application:
 * gspread - for Google worksheet API
 * ASCI - for displaying fontin different colors
+* Re module- for data validation 
 
 ## Deployment
 * The following steps were taken to deploy this site:
@@ -187,8 +188,25 @@ Display Contacts Flow and Logic
 <br>
 
 ## Testing
-* Extensive testing was carried out on the site which can be viewed here:
-* [Tests]()
+* Extensive testing was carried out on the site which are as follows:
+* PEP-8
+  - After the code was written out, each line was tested if there existed any errors in the problems termind in gitpod
+  - all the errors related to syntax and indentations were resolved leaving the code empty of any errors.
+<br>
+<br><img src="assets/images/picture of no problem in terminal">
+<br>  
+
+* after all the errors were mitigated, the code was passed through a PEP8 validtor and passed.
+<br>
+<br><img src="assets/images/picture of pep8 validator">
+<br>  
+
+* Lighthouse Report
+<br>
+<br><img src="assets/images/lighthouse picture">
+<br
+
+* User Stories Testing
 
 ### Bugs resolved:
   *

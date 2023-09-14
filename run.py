@@ -53,7 +53,7 @@ def update_contact(address_list):
                 if user_choice_index >= 0 and user_choice_index < len(matching_contacts):
                     
                     contact_index, selected_contact = matching_contacts[user_choice_index]
-                    print(f"\nyou selected {matching_contacts[user_choice_index]}\n")
+                    print(Color.PURPLE + f"\nYou selected {matching_contacts[user_choice_index]}\n" + Color.RESET)
             except ValueError:
                 print(Color.RED + "\nInvalid input. Please enter a valid number or 'q' to quit.\n" + Color.RESET)
 
@@ -61,10 +61,14 @@ def update_contact(address_list):
            
             while True:
                 new_name = input("\nEnter the updated full name (press Enter to keep the same):\n ").lower().strip()
+                if not new_name:
+                    new_name = contact[0] #use the existing name if the input is empty
                 if re.match(r'^[A-Za-z ]+$', new_name):
                     break
                 else:
-                    print(Color.RED + "\nInvalid input. Please enter a valid name with only letters and spaces.\n" + Color.RESET)    
+                    print(Color.RED + "\nInvalid input. Please enter a valid name with only letters and spaces.\n" + Color.RESET)
+            print(Color.GREEN + "\nName is being updated....\n" + Color.RESET)
+            print(Color.GREEN + "\nName is updated....\n" + Color.RESET)     
             while True:
                 new_contact = input("\nEnter the updated contact number (press Enter to keep the same):\n ")
                 if not new_contact:
@@ -79,8 +83,11 @@ def update_contact(address_list):
                 # checks if the phone number is a duplicate
                 if is_duplicate_phone_number(new_contact, address_list):
                     print(Color.RED + '\nINVALID: this number is already assigned to another contact\n' + Color.RESET)
-                    
-            new_address = input("\nEnter the updated address (press Enter to keep the same): \n").lower()   
+            print(Color.GREEN + "\nContact number is being updated....\n" + Color.RESET)
+            print(Color.GREEN + "\nContact number is updated....\n" + Color.RESET)     
+            new_address = input("\nEnter the updated address (press Enter to keep the same): \n").lower()
+            print(Color.GREEN + "\nAddress is being updated....\n" + Color.RESET)
+            print(Color.GREEN + "\nAddress is updated....\n" + Color.RESET)    
             
             # Updates the contact information
             
@@ -222,7 +229,15 @@ def main():
         print('4) Delete a contact')
         print('5) Display all contacts')
         print('6) Quit', '\n')
-        choice = int(input('\nWhat would you like to do?  \n'))
+
+        try:
+            choice = int(input('\nWhat would you like to do?  \n'))
+        except ValueError:
+            print((Color.RED + "\nInvalid input. Please enter a valid number (1 to 6).\n" + Color.RESET))
+            continue
+        if choice < 1 or choice > 6:
+            print(Color.RED + "\nInvalid choice: please select number between 1-6\n" + Color.RESET)
+            
 
         if choice == 1:
             #adding a contact
