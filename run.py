@@ -1,5 +1,7 @@
 import gspread
+import re
 from google.oauth2.service_account import Credentials
+
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -57,12 +59,22 @@ def update_contact(address_list):
 
             # Prompts the user for the updated information
            
-            new_name = input("\nEnter the updated full name (press Enter to keep the same):\n ").lower().strip()
+            #new_name = input("\nEnter the updated full name (press Enter to keep the same):\n ").lower().strip()
+            #if re.match(r'^[A-Za-z ]+$', full_name):
+                #break
+            #else:
+                #print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)    
+            while True:
+                new_name = input("\nEnter the updated full name (press Enter to keep the same):\n ").lower().strip()
+                if re.match(r'^[A-Za-z ]+$', new_name):
+                    break
+                else:
+                    print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)    
             while True:
                 new_contact = input("\nEnter the updated contact number (press Enter to keep the same):\n ")
                 if not new_contact:
                     new_contact = contact[1]  # Use the existing contact number if the input is empty
-                #validate the new number provided    
+                    #validate the new number provided    
                 new_contact = ''.join(filter(lambda char: char.isdigit() or char == '+', new_contact))
                 if not new_contact or (new_contact.startswith("+49")) and len(new_contact) == 14:
                     break #exits the loop if the input is invalid or empty
@@ -118,6 +130,19 @@ def is_duplicate_phone_number(phone_number, address_list):
             return True
     return False
 
+def name_validation(full_name):
+    '''
+    to make sure that the user's input is valid and does not 
+    include and special character or digits. the re module is used here to define an expression
+    that passed the user's input
+    '''
+
+    #while True:
+        #full_name = input('\nEnter the full name with only letters and a space in between the first and last name: \n')
+       # if re.match(r'^[A-Za-z ]+$', full_name):
+            #break
+        #else:
+            #print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)
 def delete_contact(address_list):
     '''
     the delete function allows the user to find the contact by typing in the first, last or the full name 
@@ -135,6 +160,7 @@ def delete_contact(address_list):
 
         if not matching_contacts:
             print(Color.RED + "\nContact not Found!\n" + Color.RESET)
+            break
         else:
             print(Color.GREEN + "\nContacts found:\n" + Color.RESET)
             for i, contact in matching_contacts:
@@ -161,8 +187,8 @@ def delete_contact(address_list):
             except ValueError:
                 print(Color.RED + "\nInvalid input. Please enter a valid number or 'q' to quit.\n" + Color.RESET)
         
-        if not contact_deleted and confirm_delete.lower() == ("yes"): 
-            print(Color.RED + '\nContact not found!\n' + Color.RESET)
+        #if not contact_deleted: #and confirm_delete.lower() == ("yes"): 
+            #print(Color.RED + '\nContact not found!\n' + Color.RESET)
 
 def update_google_sheet(sheet,data):
     # it updates data whenever a user adds, updates and deletes a contact
@@ -220,7 +246,12 @@ def main():
             #adding a contact
             while True:
                 print(Color.GREEN + 'Adding a contact...\n' + Color.RESET)
-                full_name = input("\nEnter the contact's full name with a space between first and last names:\n").lower().strip()
+                while True:
+                    full_name = input('\nEnter the full name with only letters and a space in between the first and last name: \n')
+                    if re.match(r'^[A-Za-z ]+$', full_name): #only letters and space
+                        break
+                    else:
+                        print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)
             
              # Check if the user provided a full name with a space
                 if full_name and ' ' in full_name:
