@@ -59,17 +59,12 @@ def update_contact(address_list):
 
             # Prompts the user for the updated information
            
-            #new_name = input("\nEnter the updated full name (press Enter to keep the same):\n ").lower().strip()
-            #if re.match(r'^[A-Za-z ]+$', full_name):
-                #break
-            #else:
-                #print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)    
             while True:
                 new_name = input("\nEnter the updated full name (press Enter to keep the same):\n ").lower().strip()
                 if re.match(r'^[A-Za-z ]+$', new_name):
                     break
                 else:
-                    print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)    
+                    print(Color.RED + "\nInvalid input. Please enter a valid name with only letters and spaces.\n" + Color.RESET)    
             while True:
                 new_contact = input("\nEnter the updated contact number (press Enter to keep the same):\n ")
                 if not new_contact:
@@ -79,7 +74,7 @@ def update_contact(address_list):
                 if not new_contact or (new_contact.startswith("+49")) and len(new_contact) == 14:
                     break #exits the loop if the input is invalid or empty
                 else:
-                    print(Color.RED + "INVALID: The phone number must start with +49 and must have 11 digits" + Color.RESET)
+                    print(Color.RED + "\nINVALID: The phone number must start with +49 and must have 11 digits\n" + Color.RESET)
     
                 # checks if the phone number is a duplicate
                 if is_duplicate_phone_number(new_contact, address_list):
@@ -130,19 +125,6 @@ def is_duplicate_phone_number(phone_number, address_list):
             return True
     return False
 
-def name_validation(full_name):
-    '''
-    to make sure that the user's input is valid and does not 
-    include and special character or digits. the re module is used here to define an expression
-    that passed the user's input
-    '''
-
-    #while True:
-        #full_name = input('\nEnter the full name with only letters and a space in between the first and last name: \n')
-       # if re.match(r'^[A-Za-z ]+$', full_name):
-            #break
-        #else:
-            #print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)
 def delete_contact(address_list):
     '''
     the delete function allows the user to find the contact by typing in the first, last or the full name 
@@ -240,18 +222,18 @@ def main():
         print('4) Delete a contact')
         print('5) Display all contacts')
         print('6) Quit', '\n')
-        choice = int(input('What would you like to do?  \n'))
+        choice = int(input('\nWhat would you like to do?  \n'))
 
         if choice == 1:
             #adding a contact
             while True:
-                print(Color.GREEN + 'Adding a contact...\n' + Color.RESET)
+                print(Color.GREEN + '\nAdding a contact...\n' + Color.RESET)
                 while True:
                     full_name = input('\nEnter the full name with only letters and a space in between the first and last name: \n')
                     if re.match(r'^[A-Za-z ]+$', full_name): #only letters and space
                         break
                     else:
-                        print(Color.RED + "Invalid input. Please enter a valid name with only letters and spaces." + Color.RESET)
+                        print(Color.RED + "\nInvalid input. Please enter a valid name with only letters and spaces.\n" + Color.RESET)
             
              # Check if the user provided a full name with a space
                 if full_name and ' ' in full_name:
