@@ -70,32 +70,32 @@
 <br>
 Main Menu 
 <br>
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/main-menu-logic.png">
 <br>
 <br>
 Add a Contact Menu Flow and Logic
 <br>
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/add-logic-flow.png">
 <br>
 <br>
 Find a Contact Flow and Logic
 <br>
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/find-logic-flow.png">
 <br>
 <br>
 Update Contact Flow and Logic
 <br>
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/update-logic-flow.png">
 <br>
 <br>
 Delete Contact Flow and Logic
 <br>
- <br><img src="assets/images/">
+ <br><img src="assets/readme-images/delete-logic-flow.png">
 <br>
 <br>
 Display Contacts Flow and Logic
 <br>
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/display-logic-flow.png">
 <br>
 <br>
 
@@ -110,16 +110,16 @@ Display Contacts Flow and Logic
    * In the terminal multiple font colors were chosen:
    * White for Menu items and headers
    * Green for successfully getting the results from the user query
-   <br><img src="assets/images/color green output">
+   <br><img src="assets/readme-images/green-col-input.png">
    <br>
    <br>
    * Purple for displaying results from the user queries such as: contact information, updated contact information.
    <br>
-   <br><img src="assets/images/purple color output">
+   <br><img src="assets/readme-images/purple-col-input.png">
    <br>
    <br>
    * Red for errors
-   <br><img src="assets/images/red color output">
+   <br><img src="assets/readme-images/red-col-input.png">
    <br>
    <br>
    
@@ -140,7 +140,7 @@ Display Contacts Flow and Logic
 
 ## Validation
 * Various validation messages were used to ensure that the user was notified correctly of any incorrect input and to ensure the program would not crash.
-<br><img src="assets/images">
+<br><img src="assets/readme-images/red-col-input.png">
 <br>
 
 ## Technology
@@ -224,7 +224,7 @@ Display Contacts Flow and Logic
   * YouTube Videos, Stack Overflow, Google Search and ChatGPT were used to clarify functions, PEP-8 requirements and docstring formats.
 
 ### Content
-  
+
 
 ### Media
   * The media used for the landing page background is royalty-free. The design was created specifically for this project.
