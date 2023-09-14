@@ -11,13 +11,12 @@
     *  [Goals](#goals)
 
 * [Design](#design)
-  * [Wireframes](#wireframes)
+  * [Logic flow](#wireframes)
   * [Color Scheme](#color-scheme)
   * [Typography](#typography)
   * [Imagery](#imagery)
   * [](#)
   * [Planned features](#planned-features)
-* [Logic](#logic)
 * [Validation](#validation)
 * [Technology](#technology)
 * [Modules & Libraries](#modules-libraries)
@@ -66,7 +65,7 @@
 * The initial concept and the logic behind the program's menu was created using Lucid chart.
 * Only desktop was considered.  The mock terminal is not suitable for mobile.
 
-### Lucid chart  (created in [](https://))
+### Logic Flow chart  created with [Lucid Chart](https://www.lucidchart.com/)
 <br>
 Main Menu 
 <br>
