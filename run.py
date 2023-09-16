@@ -41,8 +41,10 @@ def update_contact(address_list):
             print(Color.RED + "\nContact not Found!\n" + Color.RESET)
         else:
             print(Color.GREEN + "\nContacts found:\n" + Color.RESET)
+            number = 0
             for i, contact in matching_contacts:
-                print(Color.PURPLE + f"\n{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
+                number += 1
+                print(Color.PURPLE + f"\n{number}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
             
             user_choice = input('\nSelect which contact you would like to update or "q" to quit!\n')
             if user_choice.lower() == 'q':
@@ -98,8 +100,9 @@ def update_contact(address_list):
             if new_address:
                 selected_contact[2] = new_address
 
-            
+
             address_list[contact_index] = selected_contact
+            print(address_list)
             
 
             print(Color.GREEN + "\nContact updated.\n" + Color.RESET)
@@ -114,12 +117,12 @@ def find_duplicate_contacts(full_name, address_list):
 
     '''
     matching_contacts = []
-    number = 0
+    #number = 0
     for index, contact in enumerate(address_list):
         names = contact[0] 
         if any(full_name in names for name in names):
-            matching_contacts.append((number,contact))
-            number += 1
+            matching_contacts.append((index,contact))
+            #number += 1
     
     return matching_contacts
 
@@ -230,7 +233,7 @@ def main():
         print('3) Update a contact')
         print('4) Delete a contact')
         print('5) Display all contacts')
-        print('6) Quit', '\n')
+        #print('6) Quit', '\n')
 
         try:
             choice = int(input('\nWhat would you like to do?  \n'))
@@ -329,8 +332,8 @@ def main():
                     print(Color.GREEN + f"\n{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}\n" + Color.RESET)
                 
 
-    else:
-        print(Color.GREEN + 'Terminating program...\n' + Color.RESET)   
+    #else:
+        #print(Color.GREEN + 'Terminating program...\n' + Color.RESET)   
 
       
     
