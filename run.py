@@ -16,7 +16,7 @@ SHEET = GSPREAD_CLIENT.open('address_manager')
 
 
 class Color:
-    #ANSI codes for text color
+    # ANSI codes for text color
     RESET = '\033[0m'
     RED = '\033[91m'
     GREEN = '\033[92m'
@@ -98,7 +98,9 @@ def update_contact(address_list):
             if new_address:
                 selected_contact[2] = new_address
 
+            
             address_list[contact_index] = selected_contact
+            
 
             print(Color.GREEN + "\nContact updated.\n" + Color.RESET)
             print(Color.GREEN + f"\nContact Updated: Name: {selected_contact[0]}, Contact: {selected_contact[1]}, Address: {selected_contact[2]}\n" + Color.RESET)
