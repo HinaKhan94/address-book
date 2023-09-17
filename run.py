@@ -21,6 +21,7 @@ class Color:
     RED = '\033[91m'
     GREEN = '\033[92m'
     PURPLE = '\033[95m'
+    BLUE = '\033[34m'
 
 
 def update_contact(address_list):
@@ -46,18 +47,22 @@ def update_contact(address_list):
                 number += 1
                 print(Color.PURPLE + f"\n{number}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
             
-            user_choice = input('\nSelect which contact you would like to update or "q" to quit!\n')
-            if user_choice.lower() == 'q':
-                break
+            while True:
+                user_choice = input('\nSelect the number you would like to update or "q" to quit!\n')
+                if user_choice.lower() == 'q':
+                    break
           
-            try:
-                user_choice_index = int(user_choice) - 1 #
-                if user_choice_index >= 0 and user_choice_index < len(matching_contacts):
+                try:
+                    user_choice_index = int(user_choice) - 1 #
+                    if user_choice_index >= 0 and user_choice_index < len(matching_contacts):
                     
-                    contact_index, selected_contact = matching_contacts[user_choice_index]
-                    print(Color.PURPLE + f"\nYou selected {matching_contacts[user_choice_index]}\n" + Color.RESET)
-            except ValueError:
-                print(Color.RED + "\nInvalid input. Please enter a valid number or 'q' to quit.\n" + Color.RESET)
+                        contact_index, selected_contact = matching_contacts[user_choice_index]
+                        print(Color.PURPLE + f"\nYou selected {selected_contact}\n" + Color.RESET)
+                        break  # breaks the loop once valid selection is made
+                    else:
+                        print(Color.RED + "\nInvalid input. Please enter a valid number or 'q' to quit.\n" + Color.RESET)                
+                except ValueError:
+                    print(Color.RED + "\nInvalid input. Please enter a valid number or 'q' to quit.\n" + Color.RESET)
 
             # Prompts the user for the updated information
            
@@ -69,8 +74,8 @@ def update_contact(address_list):
                     break
                 else:
                     print(Color.RED + "\nInvalid input. Please enter a valid name with only letters and spaces.\n" + Color.RESET)
-            print(Color.GREEN + "\nName is being updated....\n" + Color.RESET)
-            print(Color.GREEN + "\nName is updated....\n" + Color.RESET)     
+            print(Color.BLUE + "\nName is being updated....\n" + Color.RESET)
+            print(Color.BLUE + "\nName is updated....\n" + Color.RESET)     
             while True:
                 new_contact = input("\nEnter the updated contact number (press Enter to keep the same):\n ")
                 if not new_contact:
@@ -85,11 +90,11 @@ def update_contact(address_list):
                 # checks if the phone number is a duplicate
                 if is_duplicate_phone_number(new_contact, address_list):
                     print(Color.RED + '\nINVALID: this number is already assigned to another contact\n' + Color.RESET)
-            print(Color.GREEN + "\nContact number is being updated....\n" + Color.RESET)
-            print(Color.GREEN + "\nContact number is updated....\n" + Color.RESET)     
+            print(Color.BLUE + "\nContact number is being updated....\n" + Color.RESET)
+            print(Color.BLUE + "\nContact number is updated....\n" + Color.RESET)     
             new_address = input("\nEnter the updated address (press Enter to keep the same): \n").lower()
-            print(Color.GREEN + "\nAddress is being updated....\n" + Color.RESET)
-            print(Color.GREEN + "\nAddress is updated....\n" + Color.RESET)    
+            print(Color.BLUE + "\nAddress is being updated....\n" + Color.RESET)
+            print(Color.BLUE + "\nAddress is updated....\n" + Color.RESET)    
             
             # Updates the contact information
             
@@ -102,7 +107,6 @@ def update_contact(address_list):
 
 
             address_list[contact_index] = selected_contact
-            print(address_list)
             
 
             print(Color.GREEN + "\nContact updated.\n" + Color.RESET)
@@ -157,10 +161,12 @@ def delete_contact(address_list):
             break
         else:
             print(Color.GREEN + "\nContacts found:\n" + Color.RESET)
+            number = 0
             for i, contact in matching_contacts:
-                print(Color.PURPLE + f"\n{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
+                number += 1
+                print(Color.PURPLE + f"\n{number}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
         
-            user_choice = input('\nSelect which contact you would like to delete or "q" to quit!\n')
+            user_choice = input('\nSelect the number you would like to delete or "q" to quit!\n')
             if user_choice.lower() == 'q':
                 break
           
@@ -168,7 +174,7 @@ def delete_contact(address_list):
                 user_choice_index = int(user_choice) - 1 #
                 if user_choice_index >= 0 and user_choice_index < len(matching_contacts):   
                     contact_index, selected_contact = matching_contacts[user_choice_index]
-                    print(f"\nYou selected {matching_contacts[user_choice_index]}\n")
+                    print(Color.PURPLE + f"\nYou selected {selected_contact}\n" + Color.RESET)
                     confirm_delete = input(f"\nDo you want to delete {selected_contact}\nYes/No?\n")
                     if confirm_delete.lower() == ("yes"):
                         address_list.remove(selected_contact)
@@ -207,7 +213,7 @@ def main():
     '''
     To make sure the application runs even if the file is deleted somehow
     the except argument will throw an error and terminates the program
-    The user is displayed with 6 options to choose from as the main menu of the program
+    The user is displayed with 5 options to choose from as the main menu of the program
     It also contains some data validations and if user's input does not meet the validation, it will throw validation errors
 
     '''
@@ -225,7 +231,8 @@ def main():
 
 
     choice = 0
-    while choice !=6:
+    run_program=True
+    while run_program:
         print('********** Welcome to Address Manager ***********' '\n' '** Add, Find, Update, Delete and View contacts **' '\n')
         print(Color.GREEN + 'Choose one option from the options below:  ' '\n' + Color.RESET)
         print('1) Add a contact')
@@ -233,15 +240,14 @@ def main():
         print('3) Update a contact')
         print('4) Delete a contact')
         print('5) Display all contacts')
-        #print('6) Quit', '\n')
 
         try:
             choice = int(input('\nWhat would you like to do?  \n'))
         except ValueError:
-            print((Color.RED + "\nInvalid input. Please enter a valid number (1 to 6).\n" + Color.RESET))
+            print((Color.RED + "\nInvalid input. Please enter a valid number (1-5).\n" + Color.RESET))
             continue
-        if choice < 1 or choice > 6:
-            print(Color.RED + "\nInvalid choice: please select number between 1-6\n" + Color.RESET)
+        if choice < 1 or choice > 5:
+            print(Color.RED + "\nInvalid choice: please select number between (1-5)\n" + Color.RESET)
             
 
         if choice == 1:
@@ -303,8 +309,10 @@ def main():
                         print(Color.RED + "\nContact not Found!\n" + Color.RESET)
                     else:
                         print(Color.GREEN + "\nContacts found:\n" + Color.RESET)
+                        number = 0
                         for i, contact in matching_contacts:
-                            print(Color.PURPLE + f"\n{i + 1}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
+                            number += 1
+                            print(Color.PURPLE + f"\n{number}. Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2] + Color.RESET}\n")
                             
 
                     another_search = input(Color.GREEN + "\nDo you want to look for another contact? (Yes/No:)\n"  + Color.RESET)
@@ -329,14 +337,8 @@ def main():
             for contact in all_contacts:
                 if contact[1].strip() and contact[1] != 'Contact_number':
                     number +=1
-                    print(Color.GREEN + f"\n{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}\n" + Color.RESET)
-                
-
-    #else:
-        #print(Color.GREEN + 'Terminating program...\n' + Color.RESET)   
-
-      
-    
+                    print(Color.PURPLE + f"\n{number} Name: {contact[0]}, Contact: {contact[1]}, Address: {contact[2]}\n" + Color.RESET)
+                 
 
 if __name__ == '__main__':
     main()
