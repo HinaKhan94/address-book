@@ -57,11 +57,9 @@ def update_contact(address_list):
                       f" Contact: {contact[1]}, Address: {contact[2]}" +
                       Color.RESET + "\n")
             while True:
-                user_choice = input(
-                    '\nSelect the number to update or "q" to quit!\n')
-                print(f"Debug: user_choice = '{user_choice}'")
+                user_choice = input("""\nSelect the number to""" + 
+                                    """ update or 'q' to quit!\n""")
                 if user_choice.lower() == 'q':
-                    print("Exiting loop.")
                     break
                 try:
                     user_choice_index = int(user_choice) - 1
