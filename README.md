@@ -1,43 +1,34 @@
 # Project Name - Address-Manager
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/mock-terminal.png">
 
 ## View Live Project
-* [Link to Deployed Project](https:)
+* [Link to Deployed Project](https://python-address-manager-0aa938ee9c82.herokuapp.com/)
 
 ## Contents
 * [User Experience (UX)](#user-experience)
     *  [Purpose & target audience](#purpose-and-target-audience)
     *  [User Story](#user-story)
     *  [Goals](#goals)
-
 * [Design](#design)
-  * [Logic flow](#logic-flow-chart)
-  * [Color Scheme](#color-scheme)
-  * [Typography](#typography)
-  * [Imagery](#imagery)
-  * [](#)
-  * [Planned features](#planned-features)
+* [Planned features](#planned-features)
 * [Validation](#validation)
 * [Technology](#technology)
-* [Modules & Libraries](#modules-libraries)
+* [Modules & Libraries](#modules--libraries)
 * [Deployment](#deployment)
 * [Testing](#testing)
-  * [Tests performed](#tests-performed)
-  * [User Story Tests](#user-story-tests)
   * [Bugs resolved](#bugs-resolved)
   * [Unresolved bugs](#unresolved-bugs)
   * [Improvements & future developments](#improvements-and-future-developments)
-* [Forking & Cloning Instructions](#forking-cloning-instructions)
+* [Forking & Cloning Instructions](#forking--cloning-instructions)
 * [Credits](#credits)
   * [Code](#code)
   * [Content](#content)
-  * [Media](#media)
   * [Acknowledgements](#acknowledgements)
 
 ## User Experience
 
 ### Purpose and Target Audience
-   * Address_Manager is a simple contacts storing system, safely backed up and updated to a google worksheet.
+   * Address Manager is a simple contacts storing system, safely backed up and updated to a google worksheet.
    * The app is made for everyone in Germany to add, find, update and view contacts information, including name, contact number and address.
    * For the contact number in adding a contact function, the country code (+49) used is for Germany only.
 
@@ -50,7 +41,7 @@
    * The user can choose to view contacts in the app.
    * The user can find contact by name (first, last or full name).
    * The app will display all the contacts with similar name (first, last or full name) with all information included.
-   * The user is notified when the information has been updated after each a certain action.
+   * The user is notified when the information has been updated after each action.
    * The user is notified in case of an invalid character/data entered, and will prompt the user to enter the information correctly.
 
 ### Goals
@@ -61,7 +52,7 @@
    * The user must be well informed if an entry or selection is invalid.
 
 ## Design
-* The design is a simple terminal application that uses Python as the building langugae.  The Code Institute mock terminal template was used.
+* The design is a simple terminal application that uses Python as the building language.  The Code Institute mock terminal template was used.
 
 * The initial concept and the logic behind the program's menu was created using Lucid chart.
 * Only desktop was considered.  The mock terminal is not suitable for mobile.
@@ -99,13 +90,9 @@ Display Contacts Flow and Logic
 <br>
 <br>
 
-## Color Scheme (created in [](https://))
-
 ### Main Background
    * The app uses no background image
-   * It was downloaded from.
-   <br><img src="assets/images/">
-
+  
 ### Terminal Colors
    * In the terminal multiple font colors were chosen:
    * White for Menu items and headers
@@ -126,15 +113,13 @@ Display Contacts Flow and Logic
 
 ### Typography
    * The main text font is the default font in the command line terminal.
-   * Font chosen for the title = 
-   * For the body including the start button = 
 
 ### MVP
    * A simple yet fully functionable app was created to add, find, update, delete and display contacts to anyone who looks for a contact in the system 
    * It also checks for any invalid errors and handles them according for the program to keep running wihtout causing any problem to the user.
 
 ### Planned features
-   * The initial plan waas to have a simple address manager with options to add, find, update, delete and display contacts.
+   * The initial plan was to have a simple address manager with options to add, find, update, delete and display contacts.
    * The added information is then stored in google sheet via an API call.
 
 
@@ -144,19 +129,13 @@ Display Contacts Flow and Logic
 <br>
 
 ## Technology
-* The following tools and technology were used to complete this project:
-* [Balsamiq](https://) - wireframes
-* [Canva](https://) - graphic design
-* [Lucid](https://) - logic chart
+* The following tools and technologies were used to complete this project:
+* [Lucid](https://www.lucidchart.com/) - logic chart
 * [Google Cloud Service Accounts & API](https://cloud.google.com)
-* HTML - landing page
-* CSS - landing page
 * Python - terminal application
 * GitHub - version control
 * GitPod - IDE
 * [Heroku](https://www.heroku.com/)
-* [HTML Validator](https://validator.w3.org/nu)
-* [CSS Validator](https://jigsaw.w3.org/css-validator)
 * [PEP-8 Validator](https://pep8ci.herokuapp.com/)
 
 ## Modules & Libraries
@@ -179,14 +158,8 @@ Display Contacts Flow and Logic
 * Create New App - choosing a unique name
 * Under Settings / Config Vars enter the PORT in the KEY section as 8000
 * Add buildpacks: Python and then Node.js - in that order
-<br>
-<br><img src="assets/images/">
-<br>
 * Under Deploy - select GitHub and link to repo name
 * Under Manual Deployment, click Deploy Branch
-<br>
-<br><img src="assets/images/">
-<br>
 
 ## Testing
 * Extensive testing was carried out on the site which are as follows:
@@ -199,24 +172,28 @@ Display Contacts Flow and Logic
 
 * after all the errors were mitigated, the code was passed through a PEP8 validtor and passed.
 <br>
-<br><img src="assets/images/picture of pep8 validator">
+<br><img src="assets/images/">
 <br>  
 
-* Lighthouse Report
-<br>
-<br><img src="assets/images/lighthouse picture">
-<br
-
 * User Stories Testing
+<br>
+<br><img src="assets/images/">
+<br>  
+
 
 ### Bugs resolved:
-  *
+  * User input errors that would make the program crash.
+  * Making sure the main menu is displayed once the user is done with a particular section.
+  * These errors were resolved through the usage of while loops and try and except statements.
+  * Google sheet not updating as expecting, this was resolved by fixing the errors in the respective method being called.
 
 ### Unresolved bugs:
-  * During testing on the Mock Terminal,
+  * None
 
 ### Improvements and Future Developments:
-  * 
+  * Currently the program only caters to Germany when entering contact number, it can be made for several country codes with number of characters.
+  * The app could also have a working login system so each member can access only their address list and update it accordingly.
+  * Additional input fields can be added to take more information for the contact being stored for example: links to their social media accounts, birth-date, work-phone-number(if any).
 
 ## Forking & Cloning Instructions
 * To create a copy of the repo in GitHub to edit:
@@ -239,17 +216,12 @@ Display Contacts Flow and Logic
 ## Credits:
 ### Code
   * All the code was written and developed entirely for this project.
-  * YouTube Videos, Stack Overflow, Google Search and ChatGPT were used to clarify functions, PEP-8 requirements and docstring formats.
+  * YouTube Videos, Stack Overflow, Google Search and ChatGPT were used to clarify functions, PEP-8 requirements and docstring formats
 
 ### Content
-
-
-### Media
-  * The media used for the landing page background is royalty-free. The design was created specifically for this project.
-
 ### Acknowledgements
   * Medale Oluwafemi for your mentorship.
   * Code Institute's Love Sandwiches project for the Google API
-  * Inspiration from  []()
-  * Inspiration from  []()
+  * Inspiration from  [rstan-dev](https://github.com/rstan-dev) for the readme.md file and project idea
+  * Inspiration from  [BekBrace](https://github.com/BekBrace) for project idea
   
