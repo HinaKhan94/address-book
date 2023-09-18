@@ -166,6 +166,7 @@ Display Contacts Flow and Logic
 * PEP-8
   - After the code was written out, each line was tested if there existed any errors in the problems termind in gitpod
   - all the errors related to syntax and indentations were resolved leaving the code empty of any errors.
+  - There is one error on line no. 445(no newline at end of file) which was removed and push but when the code is opened from github and checked in the linter, it does not take the line added at the end hence the issue remains.
 <br>
 <br><img src="assets/readme-images/problem-terminal.png">
 <br>  
@@ -195,6 +196,7 @@ Display Contacts Flow and Logic
 
 ### Unresolved bugs:
   * None
+  * There is one PEP8 error on line no. 445(no newline at end of file) which was removed and pushed to github but when the code is opened from github and checked in the linter, it does not take the line added at the end hence the issue remains, and this does not affect the system performance, this was left for future development.
 
 ### Improvements and Future Developments:
   * Currently the program only caters to Germany when entering contact number, it can be made for several country codes with number of characters.
