@@ -59,7 +59,9 @@ def update_contact(address_list):
             while True:
                 user_choice = input(
                     '\nSelect the number to update or "q" to quit!\n')
+                print(f"Debug: user_choice = '{user_choice}'")
                 if user_choice.lower() == 'q':
+                    print("Exiting loop.")
                     break
                 try:
                     user_choice_index = int(user_choice) - 1
@@ -247,6 +249,10 @@ def delete_contact(address_list):
                         print(Color.GREEN + '\nContact not deleted!\n'
                               + Color.RESET)
                         break   # exits the loop after processing the contact
+                else:
+                    print(Color.RED + """\nInvalid: Please enter """ +
+                          """a valid number or 'q' to quit.\n"""
+                          + Color.RESET)
             except ValueError:
                 print(Color.RED + """\nInvalid input. Please enter """ +
                       """a valid number or 'q' to quit.\n"""
@@ -395,17 +401,17 @@ def main():
                 if not matching_contacts:
                     print(Color.RED + "\nContact not Found!\n"
                           + Color.RESET)
-                    else:
-                        print(Color.GREEN + "\nContacts found:\n"
-                              + Color.RESET)
-                        number = 0
-                        for i, contact in matching_contacts:
-                            number += 1
-                            print(Color.PURPLE + f"\n{number}." +
-                                  f"Name: {contact[0]}," +
-                                  f"Contact: {contact[1]}," +
-                                  f"Address: {contact[2]}" +
-                                  Color.RESET + '\n')
+                else:
+                    print(Color.GREEN + "\nContacts found:\n"
+                          + Color.RESET)
+                    number = 0
+                    for i, contact in matching_contacts:
+                        number += 1
+                        print(Color.PURPLE + f"\n{number}." +
+                              f"Name: {contact[0]}," +
+                              f"Contact: {contact[1]}," +
+                              f"Address: {contact[2]}" +
+                              Color.RESET + '\n')
                     another_search = input(Color.GREEN + """\nDo you want""" +
                                            """ to look for another""" +
                                            """ contact? (Yes/No:)\n"""

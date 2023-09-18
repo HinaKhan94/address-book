@@ -204,7 +204,7 @@ Display Contacts Flow and Logic
 ## Forking & Cloning Instructions
 * To create a copy of the repo in GitHub to edit:
 1. Log in to your GitHub account.
-2. Navigate to [address_manager repository](https://github.com/)
+2. Navigate to [address-book repository](https://github.com/)
 3. Click on the "Fork" button located in the upper right-hand corner of the repository's page.
 4. Select the account where you want to fork the repository.
 5. Wait for GitHub to complete the forking process.
@@ -212,7 +212,7 @@ Display Contacts Flow and Logic
 
 * To clone a copy of the repo on your local machine to edit:
 1. Log in to your GitHub account.
-2. Navigate to [address_manager](https://github.com/)
+2. Navigate to [address-book](https://github.com/)
 3. Click on the "Code" button located in the upper right-hand corner of the repository's page.
 4. Click on the "HTTPS" link to copy the URL of the repository.
 5. Open the terminal or command prompt on your local machine and navigate to the directory where you want to clone the repository.
