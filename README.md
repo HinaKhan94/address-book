@@ -105,8 +105,8 @@ Display Contacts Flow and Logic
    <br><img src="assets/readme-images/purple-col-input.png">
    <br>
    <br>
-   * Red for errors
-   <br><img src="assets/readme-images/red-col-input.png">
+   * Blue for processing messages for Google Sheet
+   <br><img src="assets/readme-images/input-blue-col.png">
    <br>
    <br>
    
@@ -167,18 +167,24 @@ Display Contacts Flow and Logic
   - After the code was written out, each line was tested if there existed any errors in the problems termind in gitpod
   - all the errors related to syntax and indentations were resolved leaving the code empty of any errors.
 <br>
-<br><img src="assets/images/picture of no problem in terminal">
+<br><img src="assets/readme-images/problem-terminal.png">
 <br>  
 
-* after all the errors were mitigated, the code was passed through a PEP8 validtor and passed.
+* After all the errors were mitigated, the code was passed through a PEP8 validtor and passed.
 <br>
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/pep8-errors.png">
 <br>  
 
 * User Stories Testing
 <br>
-<br><img src="assets/images/">
+<br><img src="assets/readme-images/userstory-test-1.png">
 <br>  
+<br>
+<br><img src="assets/readme-images/userstory-test-2.png">
+<br> 
+<br>
+<br><img src="assets/readme-images/userstory-test-3.png">
+<br> 
 
 
 ### Bugs resolved:
