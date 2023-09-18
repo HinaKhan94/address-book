@@ -56,10 +56,12 @@ def update_contact(address_list):
                 print(Color.PURPLE + f"\n{number}. Name: {contact[0]}," +
                       f" Contact: {contact[1]}, Address: {contact[2]}" +
                       Color.RESET + "\n")
+            quit_update = False
             while True:
-                user_choice = input("""\nSelect the number to""" + 
+                user_choice = input("""\nSelect the number to""" +
                                     """ update or 'q' to quit!\n""")
                 if user_choice.lower() == 'q':
+                    quit_update = True
                     break
                 try:
                     user_choice_index = int(user_choice) - 1
@@ -80,6 +82,8 @@ def update_contact(address_list):
                     print(Color.RED + """\nInvalid input.""" +
                           """Please enter a valid number or 'q' to quit.\n"""
                           + Color.RESET)
+            if quit_update:
+                break  # Quit the outer loop
             # Prompts the user for the updated information
             while True:
                 new_name = (input("""\nEnter the updated full name """ +
